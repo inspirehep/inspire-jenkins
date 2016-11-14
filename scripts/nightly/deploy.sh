@@ -15,7 +15,7 @@ pushd inspire-next
 printf "########## Cleaning workspace ##########\n"
 docker-compose kill
 docker-compose rm -f || true
-rm -rf $DOCKER_DATA || true
+sudo rm -rf $DOCKER_DATA || true
 mkdir -p ${DOCKER_DATA}
 docker rm -f $(docker ps -aq) || true
 docker rmi $(docker images -q) || true
