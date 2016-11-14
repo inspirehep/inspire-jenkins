@@ -1,29 +1,24 @@
-#!/bin/bash -x
 set +x
-
-export DOCKER_DATA=$(pwd)/DOCKER_DATA/
-
-printf "########## Cleaning workspace ##########\n"
-sudo rm -rf $DOCKER_DATA
-docker rm -f $(docker ps -aq) || true
-docker rmi $(docker images -q) || true
-
-printf "########## Copping records and config to workspace ##########\n"
-cp -r ~/dumps ./inspire-next
-cp ~/inspirehep.cfg .
-
 set -e
 
 printf "########## Seting up environment ##########\n"
 pushd $WORKSPACE
 
+export DOCKER_DATA=$(pwd)/DOCKER_DATA/
+
+printf "########## Copping records and config to workspace ##########\n"
+cp -r ~/dumps ./inspire-next/.
+cp ~/inspirehep.cfg .
+
 pushd inspire-next
 
-printf "########## Clear \'gosts!!!\' containers ##########\n"
+printf "########## Cleaning workspace ##########\n"
 docker-compose kill
-docker-compose rm -f
-
+docker-compose rm -f || true
+rm -rf $DOCKER_DATA || true
 mkdir -p ${DOCKER_DATA}
+docker rm -f $(docker ps -aq) || true
+docker rmi $(docker images -q) || true
 
 printf "########## Pull and set up Docker ##########\n"
 docker-compose pull
@@ -40,7 +35,7 @@ sleep 5
 echo "	[OK]"
 
 printf "SCALING WORKERS... \n"
-docker-compose runscale worker=3
+docker-compose scale worker=3
 sleep 5
 echo "	[OK]"
 
