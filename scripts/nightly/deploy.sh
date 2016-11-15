@@ -1,7 +1,7 @@
 set +x
 set -e
 
-printf "########## Seting up environment ##########\n"
+printf "########## Setting up environment ##########\n"
 pushd $WORKSPACE
 
 export DOCKER_DATA=$(pwd)/DOCKER_DATA/
@@ -62,10 +62,10 @@ done
 printf "########## Count citations ##########\n"
 docker-compose run --rm web inspirehep migrator count_citations
 
-printf "########## Cleaning Docker containers-workpspace ##########\n"
-sudo rm -rf $DOCKER_DATA || true
-docker rm -f $(docker ps -aq) || true
-docker rmi $(docker images -q) || true
+#printf "########## Cleaning Docker containers-workpspace ##########\n"
+#sudo rm -rf $DOCKER_DATA || true
+#docker rm -f $(docker ps -aq) || true
+#docker rmi $(docker images -q) || true
 
 popd
 popd
