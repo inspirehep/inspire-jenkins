@@ -52,7 +52,7 @@ for file in $(find dumps -type f); do
     echo "migrating: $file"
     let 'CNT+=1'
     if [ $((CNT % 50)) -eq 0 ]; then
-      docker-compose rrunestart indexer
+      docker-compose restart indexer
     fi
     docker-compose run --rm web inspirehep migrator populate -f ${file} --wait=true || true
     echo "migrating: $file 	[OK]" 
