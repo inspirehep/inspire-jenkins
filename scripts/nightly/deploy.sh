@@ -35,7 +35,7 @@ sleep 5
 echo "	[OK]"
 
 printf "SCALING WORKERS... \n"
-docker-compose scale worker=3
+docker-compose scale worker=6
 sleep 5
 echo "	[OK]"
 
