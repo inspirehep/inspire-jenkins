@@ -1,6 +1,9 @@
 set +x
 set -e
 
+num_workers=$CELERY_WORKERS
+printf "Number of workers: $num_workers\n"
+
 printf "########## Setting up environment ##########\n"
 pushd $WORKSPACE
 
@@ -13,12 +16,12 @@ cp ~/inspirehep.cfg .
 pushd inspire-next
 
 printf "########## Cleaning workspace ##########\n"
-docker-compose kill
-docker-compose rm -f || true
+#docker-compose kill
+#docker-compose rm -f || true
 sudo rm -rf $DOCKER_DATA || true
-mkdir -p ${DOCKER_DATA}
 docker rm -f $(docker ps -aq) || true
 docker rmi $(docker images -q) || true
+mkdir -p ${DOCKER_DATA}
 
 printf "########## Pull and set up Docker ##########\n"
 docker-compose pull
@@ -35,7 +38,7 @@ sleep 5
 echo "	[OK]"
 
 printf "SCALING WORKERS... \n"
-docker-compose scale worker=6
+docker-compose scale worker=$num_workers
 sleep 5
 echo "	[OK]"
 
