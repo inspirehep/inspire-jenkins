@@ -1,6 +1,9 @@
 set +x
 set -e
 
+printf "========== Restarting Docker service ==========\n"
+sudo service docker restart && printf "========== Docker service Up ==========\n"
+
 num_workers=$CELERY_WORKERS
 printf "Number of workers: $num_workers\n"
 
