@@ -1,6 +1,10 @@
 set +x
 set -e
 
+prinf "========== Restarting Docker service==========\n"
+sudo service docker restart
+sleep(10)
+
 num_workers=$CELERY_WORKERS
 printf "Number of workers: $num_workers\n"
 
