@@ -1,7 +1,7 @@
 set +x
 set -e
 
-prinf "========== Restarting Docker service==========\n"
+printf "========== Restarting Docker service==========\n"
 sudo service docker restart
 sleep(10)
 
